@@ -46,6 +46,41 @@ struct Position {
     static Position fromChessNotation(const std::string& notation);
 };
 
+/**
+ * @class MovementStrategy
+ * @brief Interface xác định các chiến lược di chuyển của quân cờ.
+ * 
+ * Các lớp con của MovementStrategy sẽ định nghĩa cách di chuyển cụ thể của từng quân cờ.
+ */
+class MovementStrategy {
+public:
+    virtual ~MovementStrategy() = default;
 
+    /**
+     * @brief Kiểm tra tính hợp lệ của một nước đi từ vị trí `from` tới vị trí `to`.
+     * @param from Vị trí xuất phát.
+     * @param to Vị trí đích.
+     * @param board Bàn cờ hiện tại.
+     * @return True nếu nước đi hợp lệ, ngược lại false.
+     */
+    virtual bool isValidMove(const Position& from, const Position& to, const Board& board) const = 0;
+
+    /**
+     * @brief Lấy danh sách các vị trí có thể di chuyển đến từ vị trí `from` trên bàn cờ hiện tại.
+     * @param from Vị trí xuất phát.
+     * @param board Bàn cờ hiện tại.
+     * @return Danh sách các vị trí hợp lệ có thể di chuyển đến.
+     */
+    virtual std::vector<Position> getPossibleMoves(const Position& from, const Board& board) const = 0;
+};
+
+/**
+ * @enum PieceColor
+ * @brief Định nghĩa các màu sắc của quân cờ (trắng và đen).
+ */
+enum class PieceColor {
+    WHITE, ///< Quân cờ màu trắng.
+    BLACK  ///< Quân cờ màu đen.
+};
 
 #endif // PIECE_H
